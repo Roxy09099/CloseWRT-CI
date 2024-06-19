@@ -15,11 +15,12 @@ on:
         default: 'openwrt-21.02'
         required: true
         type: string
+        options: [openwrt-21.02, mt7988]
       TARGET:
         default: 'MTK-7981'
         required: true
         type: choice
-        options: [MTK-7981, MTK-7986]
+        options: [MTK-7981, MTK-7986, MTK-7988]
       SHRINK:
         description: '内存压缩，256M内存推荐开启。'
         default: 'false'

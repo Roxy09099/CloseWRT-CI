@@ -4,6 +4,14 @@ git clone --depth=1 https://github.com/4IceG/luci-app-sms-tool-js package/luci-s
 git clone --depth=1 https://github.com/4IceG/luci-app-3ginfo-lite package/5ginfo
 rm -rf package/5ginfo/sms-tool
 git clone --depth=1 https://github.com/obsy/sms_tool package/sms-tool
+
+cat > /etc/rc.local << EOF
+sleep 20
+quectel-CM&
+# sleep 10
+# mwan3 restart
+exit 0
+EOF
 #预置HomeProxy数据
 if [ -d *"homeproxy"* ]; then
 	HP_PATCH="homeproxy/root/etc/homeproxy/resources"

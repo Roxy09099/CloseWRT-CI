@@ -5,7 +5,7 @@ git clone --depth=1 https://github.com/4IceG/luci-app-3ginfo-lite package/5ginfo
 rm -rf package/5ginfo/sms-tool
 git clone --depth=1 https://github.com/obsy/sms_tool package/sms-tool
 
-cat > /etc/rc.local << EOF
+cat > package/base-files/files/etc/rc.local << EOF
 sleep 20
 quectel-CM&
 # sleep 10

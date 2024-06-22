@@ -153,6 +153,7 @@ jobs:
       - name: Update Feeds
         run: |
           cd ./wrt/
+          sed -i '338s/status = "disabled";/status = "okay";/' target/linux/mediatek/files-5.4/arch/arm64/boot/dts/mediatek/mt7988a-bananapi-bpi-r4-sd.dts
           sed -i '18,33d' target/linux/mediatek/image/Makefile
           ./scripts/feeds update -a
           ./scripts/feeds install -a

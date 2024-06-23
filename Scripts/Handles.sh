@@ -5,13 +5,46 @@ git clone --depth=1 https://github.com/4IceG/luci-app-3ginfo-lite package/5ginfo
 rm -rf package/5ginfo/sms-tool
 git clone --depth=1 https://github.com/obsy/sms_tool package/sms-tool
 
-cat > package/base-files/files/etc/rc.local << EOF
+cat > base-files/files/etc/rc.local << EOF
 sleep 20
 quectel-CM&
 # sleep 10
 # mwan3 restart
 exit 0
 EOF
+
+cat > base-files/files/etc/uci-defaults/99_custom << 'EOF'
+#!/bin/sh
+
+uci -q set network.qmi1=interface
+uci -q set network.qmi1.proto='dhcp'
+uci -q set network.qmi1.device='wwan0_1'
+uci -q set network.qmi1.metric='11'
+uci -q set firewall.@zone[1].network="$(uci -q get firewall.@zone[1].network) qmi1"
+uci -q set network.wan.metric='10'
+
+uci -q commit
+
+uci set 3ginfo.@3ginfo[0].network='qmi1'
+uci set 3ginfo.@3ginfo[0].device='/dev/ttyUSB3'
+uci commit
+
+uci set sms_tool_js.@sms_tool_js[0].readport='/dev/ttyUSB2'
+uci set sms_tool_js.@sms_tool_js[0].storage='ME'
+uci set sms_tool_js.@sms_tool_js[0].mergesms='1'
+uci set sms_tool_js.@sms_tool_js[0].algorithm='Advanced'
+uci set sms_tool_js.@sms_tool_js[0].direction='Start'
+uci set sms_tool_js.@sms_tool_js[0].sendport='/dev/ttyUSB2'
+uci set sms_tool_js.@sms_tool_js[0].pnumber='84'
+uci set sms_tool_js.@sms_tool_js[0].checktime='10'
+uci set sms_tool_js.@sms_tool_js[0].prestart='6'
+uci set sms_tool_js.@sms_tool_js[0].ledtype='D'
+uci set sms_tool_js.@sms_tool_js[0].ussdport='/dev/ttyUSB2'
+uci set sms_tool_js.@sms_tool_js[0].atport='/dev/ttyUSB2'
+uci commit
+
+EOF
+
 #预置HomeProxy数据
 if [ -d *"homeproxy"* ]; then
 	HP_PATCH="homeproxy/root/etc/homeproxy/resources"

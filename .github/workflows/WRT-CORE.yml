@@ -153,7 +153,7 @@ jobs:
       - name: Update Feeds
         run: |
           cd ./wrt/
-          sed -i '701/infra_f26m_o0/infra_pcie_peri_ck_26m_ck_p3/' target/linux/mediatek/files-5.4/drivers/clk/mediatek/clk-mt7988.c
+          sed -i '701s/infra_f26m_o0/infra_pcie_peri_ck_26m_ck_p3/' target/linux/mediatek/files-5.4/drivers/clk/mediatek/clk-mt7988.c
           sed -i '338s/status = "disabled";/status = "okay";/' target/linux/mediatek/files-5.4/arch/arm64/boot/dts/mediatek/mt7988a-bananapi-bpi-r4-sd.dts
           sed -i '18,33d' target/linux/mediatek/image/Makefile
           ./scripts/feeds update -a

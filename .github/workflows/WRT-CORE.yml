@@ -153,6 +153,7 @@ jobs:
       - name: Update Feeds
         run: |
           cd ./wrt/
+          cp -f $GITHUB_WORKSPACE/Scripts/252-clk-mediatek-mt7988-infracfg-fix-clocks-for-2nd-PCIe.patch target/linux/mediatek/patches-5.4/
           sed -i '338s/status = "disabled";/status = "okay";/' target/linux/mediatek/files-5.4/arch/arm64/boot/dts/mediatek/mt7988a-bananapi-bpi-r4-sd.dts
           sed -i '18,33d' target/linux/mediatek/image/Makefile
           ./scripts/feeds update -a
